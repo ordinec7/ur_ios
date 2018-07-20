@@ -15,7 +15,7 @@ struct MapConfig {
     let path: [Int: [Cell]]
 }
 
-struct Cell: Hashable {
+struct Cell: Hashable, Equatable, Codable {
     let x: Int
     let y: Int
 }

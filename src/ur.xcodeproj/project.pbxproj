@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A150C202100FBD40044490A /* TestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A150C1F2100FBD40044490A /* TestTests.swift */; };
 		0774E3DB20FF7E6600A2D818 /* MapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0774E3DA20FF7E6600A2D818 /* MapConfig.swift */; };
 		0774E3DD20FF808D00A2D818 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0774E3DC20FF808D00A2D818 /* Map.swift */; };
+		3A0B4B212102084E00ED1C13 /* MapConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B4B202102084E00ED1C13 /* MapConfigTests.swift */; };
+		3A0B4B25210208B000ED1C13 /* MapConfigTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B4B24210208B000ED1C13 /* MapConfigTestModel.swift */; };
+		3A0B4B2721020CF800ED1C13 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B4B2621020CF800ED1C13 /* MapTests.swift */; };
+		3A150C202100FBD40044490A /* TestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A150C1F2100FBD40044490A /* TestTests.swift */; };
 		3A51A9D120EBCC8500C230B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A51A9D020EBCC8500C230B9 /* AppDelegate.swift */; };
 		3A51A9D320EBCC8500C230B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A51A9D220EBCC8500C230B9 /* ViewController.swift */; };
 		3A51A9D620EBCC8500C230B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A51A9D420EBCC8500C230B9 /* Main.storyboard */; };
@@ -32,6 +35,9 @@
 		0774E3DA20FF7E6600A2D818 /* MapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfig.swift; sourceTree = "<group>"; };
 		0774E3DC20FF808D00A2D818 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		249CA4B526E0552556962930 /* Pods-ur.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ur.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ur/Pods-ur.debug.xcconfig"; sourceTree = "<group>"; };
+		3A0B4B202102084E00ED1C13 /* MapConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfigTests.swift; sourceTree = "<group>"; };
+		3A0B4B24210208B000ED1C13 /* MapConfigTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfigTestModel.swift; sourceTree = "<group>"; };
+		3A0B4B2621020CF800ED1C13 /* MapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTests.swift; sourceTree = "<group>"; };
 		3A150C1D2100FBD40044490A /* ur-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ur-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A150C1F2100FBD40044490A /* TestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTests.swift; sourceTree = "<group>"; };
 		3A150C212100FBD40044490A /* ur_Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ur_Tests-Info.plist"; sourceTree = "<group>"; };
@@ -65,10 +71,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0774E3D920FF7E3F00A2D818 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0774E3DA20FF7E6600A2D818 /* MapConfig.swift */,
+				0774E3DC20FF808D00A2D818 /* Map.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3A0B4B222102089300ED1C13 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3A0B4B24210208B000ED1C13 /* MapConfigTestModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		3A150C1E2100FBD40044490A /* Testing */ = {
 			isa = PBXGroup;
 			children = (
 				3A150C1F2100FBD40044490A /* TestTests.swift */,
+				3A0B4B202102084E00ED1C13 /* MapConfigTests.swift */,
+				3A0B4B2621020CF800ED1C13 /* MapTests.swift */,
+				3A0B4B222102089300ED1C13 /* Model */,
 			);
 			path = Testing;
 			sourceTree = "<group>";
@@ -90,15 +116,6 @@
 				3A150C212100FBD40044490A /* ur_Tests-Info.plist */,
 			);
 			path = Plists;
-			sourceTree = "<group>";
-		};
-		0774E3D920FF7E3F00A2D818 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				0774E3DA20FF7E6600A2D818 /* MapConfig.swift */,
-				0774E3DC20FF808D00A2D818 /* Map.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		3A51A9C420EBCC8500C230B9 = {
@@ -273,7 +290,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A0B4B212102084E00ED1C13 /* MapConfigTests.swift in Sources */,
 				3A150C202100FBD40044490A /* TestTests.swift in Sources */,
+				3A0B4B2721020CF800ED1C13 /* MapTests.swift in Sources */,
+				3A0B4B25210208B000ED1C13 /* MapConfigTestModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

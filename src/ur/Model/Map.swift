@@ -42,7 +42,7 @@ class Map {
     }
 }
 
-enum PathSearchResult {
+enum PathSearchResult: Equatable {
     case valid([Cell])
     case exit([Cell])
     case invalid
