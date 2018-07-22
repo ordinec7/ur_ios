@@ -18,6 +18,11 @@ class Map {
         return Set(config.path.values.flatMap({ $0 }))
 //        return Array(Set(paths))
     }
+    
+    /// Calculates path from given cell.
+    /// - parameter cell: Initial cell, from which path should be calculated. If nil, calculates path from outside the field
+    /// - parameter length: Step size. Should be greated than 0, or else invalid path is returned
+    /// - parameter player: Player id for which path sould be calculated
     public func movePath(from cell: Cell, with length: Int, player: Int) -> PathSearchResult {
         guard length > 0,
             let playerPath = config.path[player],
