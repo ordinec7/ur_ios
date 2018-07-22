@@ -11,7 +11,7 @@ import Foundation
 struct MapConfig {
     let height: Int
     let width: Int
-    let highgroundsCells: [Cell]
+    let highgroundsCells: Set<Cell>
     let path: [Int: [Cell]]
 }
 

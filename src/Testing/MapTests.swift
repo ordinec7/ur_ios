@@ -34,8 +34,8 @@ class MapTests: XCTestCase {
     
     
     func testValidCells() {
-        XCTAssertEqual(smallMap.validCells, ["0;0", "1;0", "0;1", "1;1"])
-        XCTAssertEqual(twoPlayersMap.validCells, ["0;0", "1;0", "2;0", "3;0", "3;1", "3;2", "3;3", "2;3", "1;3", "0;3", "0;2", "0;1"])
+        XCTAssertEqual(smallMap.validCells, Set(["0;0", "1;0", "0;1", "1;1"]))
+        XCTAssertEqual(twoPlayersMap.validCells, Set(["0;0", "1;0", "2;0", "3;0", "3;1", "3;2", "3;3", "2;3", "1;3", "0;3", "0;2", "0;1"]))
     }
     
     
@@ -66,7 +66,7 @@ class MapTests: XCTestCase {
         
         XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 1, player: 2), .invalid, "Expected invalid result since player 2 has no path")
         XCTAssertEqual(twoPlayersMap.movePath(from: "0.3", with: 1, player: 1), .invalid, "Expected invalid result since path of player 1 does not go through cell 0:3")
-        XCTAssertEqual(twoPlayersMap.movePath(from: "3.0", with: 1, player: 1), .invalid, "Expected invalid result since path of player 0 does not go through cell 3:0")
+        XCTAssertEqual(twoPlayersMap.movePath(from: "3.0", with: 1, player: 0), .invalid, "Expected invalid result since path of player 0 does not go through cell 3:0")
         
         XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 1, player: 0), .valid(["0.1"]))
         XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 6, player: 0), .valid(["0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
