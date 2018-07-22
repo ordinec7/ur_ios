@@ -14,7 +14,7 @@ class MapTests: XCTestCase {
     let smallMap = Map(config: MapConfigModels.small)
     let twoPlayersMap = Map(config: MapConfigModels.twoPlayersSmall)
     let hugePathMap = Map(config: MapConfigModels.hugePath)
-    
+    let zeroMap = Map(config: MapConfigModels.zero)
     
     override func setUp() {
         super.setUp()
@@ -34,8 +34,8 @@ class MapTests: XCTestCase {
     
     
     func testValidCells() {
-        XCTAssertEqual(smallMap.validCells, Set(["0;0", "1;0", "0;1", "1;1"]))
-        XCTAssertEqual(twoPlayersMap.validCells, Set(["0;0", "1;0", "2;0", "3;0", "3;1", "3;2", "3;3", "2;3", "1;3", "0;3", "0;2", "0;1"]))
+        XCTAssertEqual(smallMap.validCells, ["0;0", "1;0", "0;1", "1;1"])
+        XCTAssertEqual(twoPlayersMap.validCells, ["0;0", "1;0", "2;0", "3;0", "3;1", "3;2", "3;3", "2;3", "1;3", "0;3", "0;2", "0;1"])
     }
     
     
@@ -57,23 +57,23 @@ class MapTests: XCTestCase {
         XCTAssertEqual(smallMap.movePath(from: "0.0", with: -2, player: 0), .invalid, "Expected invalid result since step is negative")
         XCTAssertEqual(smallMap.movePath(from: "0.0", with: 0, player: 0), .invalid, "Expected invalid result since step is zero")
         
-        XCTAssertEqual(smallMap.movePath(from: "0.0", with: 3, player: 0), .valid(["0.1", "1.1", "1.0"]))
-        XCTAssertEqual(smallMap.movePath(from: "0.0", with: 4, player: 0), .exit(["0.1", "1.1", "1.0"]))
-        XCTAssertEqual(smallMap.movePath(from: "1.0", with: 1, player: 0), .exit([]))
+        XCTAssertEqual(smallMap.movePath(from: "0.0", with: 3, player: 0), .valid(["0.0", "0.1", "1.1", "1.0"]))
+        XCTAssertEqual(smallMap.movePath(from: "0.0", with: 4, player: 0), .exit(["0.0", "0.1", "1.1", "1.0"]))
+        XCTAssertEqual(smallMap.movePath(from: "1.0", with: 1, player: 0), .exit(["1.0"]))
         XCTAssertEqual(smallMap.movePath(from: "1.0", with: 2, player: 0), .invalid)
-        XCTAssertEqual(smallMap.movePath(from: "1.1", with: 2, player: 0), .exit(["1.0"]))
-        XCTAssertEqual(smallMap.movePath(from: "1.1", with: 1, player: 0), .valid(["1.0"]))
+        XCTAssertEqual(smallMap.movePath(from: "1.1", with: 2, player: 0), .exit(["1.1", "1.0"]))
+        XCTAssertEqual(smallMap.movePath(from: "1.1", with: 1, player: 0), .valid(["1.1", "1.0"]))
         
         XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 1, player: 2), .invalid, "Expected invalid result since player 2 has no path")
         XCTAssertEqual(twoPlayersMap.movePath(from: "0.3", with: 1, player: 1), .invalid, "Expected invalid result since path of player 1 does not go through cell 0:3")
         XCTAssertEqual(twoPlayersMap.movePath(from: "3.0", with: 1, player: 0), .invalid, "Expected invalid result since path of player 0 does not go through cell 3:0")
         
-        XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 1, player: 0), .valid(["0.1"]))
-        XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 6, player: 0), .valid(["0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
-        XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 7, player: 0), .exit(["0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
+        XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 1, player: 0), .valid(["0.0", "0.1"]))
+        XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 6, player: 0), .valid(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
+        XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 7, player: 0), .exit(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
         
-        XCTAssertEqual(twoPlayersMap.movePath(from: "1.3", with: 2, player: 0), .valid(["0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
-        XCTAssertEqual(twoPlayersMap.movePath(from: "1.3", with: 3, player: 0), .exit(["0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
+        XCTAssertEqual(twoPlayersMap.movePath(from: "1.3", with: 2, player: 0), .valid(["1.3", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
+        XCTAssertEqual(twoPlayersMap.movePath(from: "1.3", with: 3, player: 0), .exit(["1.3", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
         XCTAssertEqual(twoPlayersMap.movePath(from: "1.3", with: 4, player: 0), .invalid)
         
         XCTAssertEqual(twoPlayersMap.movePath(from: "2.2", with: 1, player: 0), .invalid)
@@ -88,8 +88,11 @@ class MapTests: XCTestCase {
                 XCTFail("Expected path with size \(stepSize) starting on \(startPoint) to be valid on a map with max path lenght 10000. Actual result: \(pathSearchResult)")
                 continue
             }
-            XCTAssertEqual(path.count, stepSize, "Expected valid path to be of length equal to step size")
+            XCTAssertEqual(path.count, stepSize + 1, "Expected valid path to be of length equal to step size plus one")
         }
+        
+        
+        XCTAssertEqual(zeroMap.movePath(from: "0.0", with: 1, player: 0), .invalid)
     }
     
 }

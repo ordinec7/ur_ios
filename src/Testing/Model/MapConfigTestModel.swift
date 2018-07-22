@@ -22,6 +22,8 @@ struct MapConfigModels {
     static let hugePath = MapConfig(height: 100, width: 100, highgroundsCells: [], path: [
         0: (0..<10000).map { Cell(x: $0 / 100, y: $0 % 100) }
     ])
+    
+    static let zero = MapConfig(height: 0, width: 0, highgroundsCells: [], path: [0: [], 1: []])
 }
 
 
