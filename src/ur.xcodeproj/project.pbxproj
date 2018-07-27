@@ -19,6 +19,7 @@
 		3A51A9D820EBCC8600C230B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A51A9D720EBCC8600C230B9 /* Assets.xcassets */; };
 		3A51A9DB20EBCC8600C230B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A51A9D920EBCC8600C230B9 /* LaunchScreen.storyboard */; };
 		3A6B9FB2210B5EAF001F11DB /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FB1210B5EAF001F11DB /* TestHelpers.swift */; };
+		3A6B9FB4210BA61C001F11DB /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FB3210BA61C001F11DB /* Dice.swift */; };
 		5B8AEA46D6DDEEC675BE8117 /* Pods_ur.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C44F3AD60DD57B8ACD7EAA /* Pods_ur.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,7 @@
 		3A51A9DA20EBCC8600C230B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3A51A9DC20EBCC8600C230B9 /* ur-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ur-Info.plist"; sourceTree = "<group>"; };
 		3A6B9FB1210B5EAF001F11DB /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		3A6B9FB3210BA61C001F11DB /* Dice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
 		760904AD91859879EB248D0E /* Pods-ur.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ur.release.xcconfig"; path = "Pods/Target Support Files/Pods-ur/Pods-ur.release.xcconfig"; sourceTree = "<group>"; };
 		F9C44F3AD60DD57B8ACD7EAA /* Pods_ur.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ur.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -78,6 +80,7 @@
 			children = (
 				0774E3DA20FF7E6600A2D818 /* MapConfig.swift */,
 				0774E3DC20FF808D00A2D818 /* Map.swift */,
+				3A6B9FB3210BA61C001F11DB /* Dice.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 			files = (
 				0774E3DB20FF7E6600A2D818 /* MapConfig.swift in Sources */,
 				3A51A9D320EBCC8500C230B9 /* ViewController.swift in Sources */,
+				3A6B9FB4210BA61C001F11DB /* Dice.swift in Sources */,
 				0774E3DD20FF808D00A2D818 /* Map.swift in Sources */,
 				3A51A9D120EBCC8500C230B9 /* AppDelegate.swift in Sources */,
 			);
