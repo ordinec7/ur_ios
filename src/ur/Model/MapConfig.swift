@@ -20,3 +20,8 @@ struct Cell: Hashable, Equatable, Codable {
     let y: Int
 }
 
+extension Cell: CustomDebugStringConvertible {
+    var debugDescription: String {
+        return "\(x):\(y)"
+    }
+}

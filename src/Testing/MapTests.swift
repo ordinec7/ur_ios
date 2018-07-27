@@ -11,6 +11,8 @@ import XCTest
 
 class MapTests: XCTestCase {
     
+    typealias PSR = PathSearchResult
+    
     let smallMap = Map(config: MapConfigModels.small)
     let twoPlayersMap = Map(config: MapConfigModels.twoPlayersSmall)
     let hugePathMap = Map(config: MapConfigModels.hugePath)
@@ -50,49 +52,59 @@ class MapTests: XCTestCase {
     }
     
     
-    func testPathFind() {
-        XCTAssertEqual(smallMap.movePath(from: "0.0", with: 1, player: 1), .invalid, "Expected invalid result since player 1 has no path")
-        XCTAssertEqual(smallMap.movePath(from: "2.2", with: 1, player: 0), .invalid, "Expected invalid result since cell 2:2 does not exist")
-        XCTAssertEqual(smallMap.movePath(from: "0.0", with: 100, player: 0), .invalid, "Expected invalid result since step is larger then map")
-        XCTAssertEqual(smallMap.movePath(from: "0.0", with: -2, player: 0), .invalid, "Expected invalid result since step is negative")
-        XCTAssertEqual(smallMap.movePath(from: "0.0", with: 0, player: 0), .invalid, "Expected invalid result since step is zero")
+    func testPathFindOutOfBoundsValues() {
+        XCTAssertNil(smallMap.findPath(from: 0, withStep: 1, player: 1), "Expected invalid result since player 1 has no path")
+        XCTAssertNil(smallMap.findPath(from: 0, withStep: 1, player: -1000), "Expected invalid result since player -1000 has no path")
         
-        XCTAssertEqual(smallMap.movePath(from: "0.0", with: 3, player: 0), .valid(["0.0", "0.1", "1.1", "1.0"]))
-        XCTAssertEqual(smallMap.movePath(from: "0.0", with: 4, player: 0), .exit(["0.0", "0.1", "1.1", "1.0"]))
-        XCTAssertEqual(smallMap.movePath(from: "1.0", with: 1, player: 0), .exit(["1.0"]))
-        XCTAssertEqual(smallMap.movePath(from: "1.0", with: 2, player: 0), .invalid)
-        XCTAssertEqual(smallMap.movePath(from: "1.1", with: 2, player: 0), .exit(["1.1", "1.0"]))
-        XCTAssertEqual(smallMap.movePath(from: "1.1", with: 1, player: 0), .valid(["1.1", "1.0"]))
+        XCTAssertNil(smallMap.findPath(from: 300, withStep: 1, player: 0), "Expected invalid result since path position is out of bounds")
+        XCTAssertNil(smallMap.findPath(from: -5000, withStep: 1, player: 0), "Expected invalid result since path position is out of bounds")
+        XCTAssertNil(smallMap.findPath(from: 4, withStep: 1, player: 0), "Expected invalid result since path position is out of bounds")
+        XCTAssertNil(smallMap.findPath(from: .exit, withStep: 1, player: 0), "Expected invalid result since path position is the finish of the path")
         
-        XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 1, player: 2), .invalid, "Expected invalid result since player 2 has no path")
-        XCTAssertEqual(twoPlayersMap.movePath(from: "0.3", with: 1, player: 1), .invalid, "Expected invalid result since path of player 1 does not go through cell 0:3")
-        XCTAssertEqual(twoPlayersMap.movePath(from: "3.0", with: 1, player: 0), .invalid, "Expected invalid result since path of player 0 does not go through cell 3:0")
-        
-        XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 1, player: 0), .valid(["0.0", "0.1"]))
-        XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 6, player: 0), .valid(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
-        XCTAssertEqual(twoPlayersMap.movePath(from: "0.0", with: 7, player: 0), .exit(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
-        
-        XCTAssertEqual(twoPlayersMap.movePath(from: "1.3", with: 2, player: 0), .valid(["1.3", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
-        XCTAssertEqual(twoPlayersMap.movePath(from: "1.3", with: 3, player: 0), .exit(["1.3", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"]))
-        XCTAssertEqual(twoPlayersMap.movePath(from: "1.3", with: 4, player: 0), .invalid)
-        
-        XCTAssertEqual(twoPlayersMap.movePath(from: "2.2", with: 1, player: 0), .invalid)
-        XCTAssertEqual(twoPlayersMap.movePath(from: "2.2", with: 1, player: 1), .invalid)
-        XCTAssertEqual(twoPlayersMap.movePath(from: "2.2", with: 1, player: 2), .invalid)
-        
-        for _ in 0..<5 {
-            let stepSize = Int(arc4random_uniform(5000))
-            let startPoint = Cell(x: Int(arc4random_uniform(40)), y: Int(arc4random_uniform(40)))
-            let pathSearchResult = hugePathMap.movePath(from: startPoint, with: stepSize, player: 0)
-            guard case let .valid(path) = pathSearchResult else {
-                XCTFail("Expected path with size \(stepSize) starting on \(startPoint) to be valid on a map with max path lenght 10000. Actual result: \(pathSearchResult)")
-                continue
-            }
-            XCTAssertEqual(path.count, stepSize + 1, "Expected valid path to be of length equal to step size plus one")
-        }
-        
-        
-        XCTAssertEqual(zeroMap.movePath(from: "0.0", with: 1, player: 0), .invalid)
+        XCTAssertNil(smallMap.findPath(from: 0, withStep: 100, player: 0), "Expected invalid result since step is larger then map")
+        XCTAssertNil(smallMap.findPath(from: .onPath(Int.max), withStep: 100000, player: 0), "Expected invalid result since step is larger then map")
+        XCTAssertNil(smallMap.findPath(from: 0, withStep: 100000, player: 0), "Expected invalid result since step is larger then map")
+        XCTAssertNil(smallMap.findPath(from: 0, withStep: -1, player: 0), "Expected invalid result since step is negative")
+        XCTAssertNil(smallMap.findPath(from: 0, withStep: Int.min, player: 0), "Expected invalid result since step is negative")
+        XCTAssertNil(smallMap.findPath(from: 0, withStep: 0, player: 0), "Expected invalid result since step is zero")
     }
     
+    
+    func testPathReasonableValues() {
+        
+        // Small map
+        
+        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 1, player: 0), PSR(["0.0"], 0))
+        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 2, player: 0), PSR(["0.0", "0.1"], 1))
+        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 4, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], 3))
+        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 5, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], .exit))
+        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 6, player: 0), PSR?.none)
+        
+        XCTAssertEqual(smallMap.findPath(from: 0, withStep: 3, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], 3))
+        XCTAssertEqual(smallMap.findPath(from: 0, withStep: 4, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], .exit))
+        XCTAssertEqual(smallMap.findPath(from: 3, withStep: 1, player: 0), PSR(["1.0"], .exit))
+        XCTAssertEqual(smallMap.findPath(from: 3, withStep: 2, player: 0), PSR?.none)
+        XCTAssertEqual(smallMap.findPath(from: 2, withStep: 2, player: 0), PSR(["1.1", "1.0"], .exit))
+        XCTAssertEqual(smallMap.findPath(from: 2, withStep: 1, player: 0), PSR(["1.1", "1.0"], 3))
+        
+        // Two players map
+        
+        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 1, player: 0), PSR(["0.0"], 0))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 1, player: 0), PSR(["0.0", "0.1"], 1))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 6, player: 0), PSR(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"], 6))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 7, player: 0), PSR(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"], .exit))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 8, player: 0), PSR?.none)
+        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 8, player: 0), PSR(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"], .exit))
+        
+        XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 2, player: 0), PSR(["1.3", "2.3", "3.3"], 6))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 3, player: 0), PSR(["1.3", "2.3", "3.3"], .exit))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 4, player: 0), PSR?.none)
+        
+        XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 1, player: 1), PSR(["2.0", "1.0"], 5))
+        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 1, player: 1), PSR(["3.3"], 0))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 6, withStep: 1, player: 1), PSR(["0.0"], .exit))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 6, withStep: 2, player: 1), PSR?.none)
+        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 8, player: 1), PSR(["3.3", "3.2", "3.1", "3.0", "2.0", "1.0", "0.0"], .exit))
+    
+    }
 }

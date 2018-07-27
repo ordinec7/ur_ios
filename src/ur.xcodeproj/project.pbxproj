@@ -18,6 +18,7 @@
 		3A51A9D620EBCC8500C230B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A51A9D420EBCC8500C230B9 /* Main.storyboard */; };
 		3A51A9D820EBCC8600C230B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A51A9D720EBCC8600C230B9 /* Assets.xcassets */; };
 		3A51A9DB20EBCC8600C230B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A51A9D920EBCC8600C230B9 /* LaunchScreen.storyboard */; };
+		3A6B9FB2210B5EAF001F11DB /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FB1210B5EAF001F11DB /* TestHelpers.swift */; };
 		5B8AEA46D6DDEEC675BE8117 /* Pods_ur.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C44F3AD60DD57B8ACD7EAA /* Pods_ur.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		3A51A9D720EBCC8600C230B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A51A9DA20EBCC8600C230B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3A51A9DC20EBCC8600C230B9 /* ur-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ur-Info.plist"; sourceTree = "<group>"; };
+		3A6B9FB1210B5EAF001F11DB /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		760904AD91859879EB248D0E /* Pods-ur.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ur.release.xcconfig"; path = "Pods/Target Support Files/Pods-ur/Pods-ur.release.xcconfig"; sourceTree = "<group>"; };
 		F9C44F3AD60DD57B8ACD7EAA /* Pods_ur.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ur.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -83,6 +85,7 @@
 		3A0B4B222102089300ED1C13 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3A6B9FB1210B5EAF001F11DB /* TestHelpers.swift */,
 				3A0B4B24210208B000ED1C13 /* MapConfigTestModel.swift */,
 			);
 			path = Model;
@@ -291,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A0B4B212102084E00ED1C13 /* MapConfigTests.swift in Sources */,
+				3A6B9FB2210B5EAF001F11DB /* TestHelpers.swift in Sources */,
 				3A150C202100FBD40044490A /* TestTests.swift in Sources */,
 				3A0B4B2721020CF800ED1C13 /* MapTests.swift in Sources */,
 				3A0B4B25210208B000ED1C13 /* MapConfigTestModel.swift in Sources */,
