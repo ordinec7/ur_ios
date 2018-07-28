@@ -9,44 +9,39 @@
 import GameplayKit
 
 
-protocol Dice {
-    associatedtype RandomResult
-    func next() -> RandomResult
-}
-
-
-protocol DiceSet {
-    associatedtype DiceType: Dice
-    func next() -> [DiceType.RandomResult]
-}
-
-
-struct UrDiceSet: DiceSet {
-    typealias DiceType = UrDice
+struct DiceSet {
     
-    private let dices: [UrDice]
+    private let dices: [Dice]
     
     func next() -> [Int] {
         return dices.map { $0.next() }
     }
     
     init(randomSource: GKRandom = GKRandomSource.sharedRandom(), count: Int = 4) {
-        self.dices = Array.init(repeating: UrDice(randomSource: randomSource), count: count)
+        self.dices = Array(repeating: Dice.urDice(randomSource), count: count)
     }
-    
 }
 
 
-struct UrDice: Dice {
-    typealias RandomResult = Int
+struct Dice {
     
     private let random: GKRandomDistribution
+    
+    var lowestValue: Int { return random.lowestValue }
+    var highestValue: Int { return random.highestValue }
     
     func next() -> Int {
         return random.nextInt()
     }
 
-    init(randomSource: GKRandom = GKRandomSource.sharedRandom()) {
-        self.random = GKRandomDistribution(randomSource: randomSource, lowestValue: 0, highestValue: 1)
+    init(lowest: Int, highest: Int, randomSource: GKRandom = GKRandomSource.sharedRandom()) {
+        self.random = GKRandomDistribution(randomSource: randomSource, lowestValue: lowest, highestValue: highest)
+    }
+}
+
+
+extension Dice {
+    static func urDice(_ random: GKRandom) -> Dice {
+        return self.init(lowest: 0, highest: 1, randomSource: random)
     }
 }

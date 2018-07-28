@@ -8,11 +8,14 @@
 
 import Foundation
 
-class Map {
-    let config: MapConfig
-    var validCells: Set<Cell> {
-        return Set(config.path.values.flatMap({ $0 }))
-    }
+struct Map {
+    private let config: MapConfig
+    
+    let height: Int
+    let width: Int
+    let origin: Cell
+    let validCells: Set<Cell>
+    var players: [Int] { return Array(config.path.keys) }
     
     /// Calculates path from given cell.
     /// - parameter cell: Initial cell, from which path should be calculated. If nil, calculates path from outside the field
@@ -46,6 +49,18 @@ class Map {
     
     init(config: MapConfig) {
         self.config = config
+        self.validCells = Set(config.path.values.flatMap({ $0 }))
+        
+        var minmax = (minX: 0, minY: 0, maxX: 0, maxY: 0)
+        validCells.forEach {
+            minmax = (min(minmax.minX, $0.x),
+                      min(minmax.minY, $0.y),
+                      max(minmax.maxX, $0.x),
+                      max(minmax.maxY, $0.y))
+        }
+        self.height = minmax.maxY - minmax.minY
+        self.width = minmax.maxX - minmax.minX
+        self.origin = Cell(x: -minmax.minX, y: -minmax.minY)
     }
 }
 
