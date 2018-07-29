@@ -21,26 +21,35 @@ struct Map {
     /// - parameter cell: Initial cell, from which path should be calculated. If nil, calculates path from outside the field
     /// - parameter length: Step size. Should be greated than 0, or else invalid path is returned
     /// - parameter player: Player id for which path sould be calculated
-    public func findPath(from position: PathPosition, withStep stepSize: Int, player: Int) -> PathSearchResult? {
+    public func findPath(from startPosition: PathPosition, withStep stepSize: Int, player: Int) -> PathSearchResult? {
         guard stepSize > 0,
             let playerPath = config.path[player],
-            let startIndex = position.value,
+            let startIndex = startPosition.value,
             startIndex < playerPath.endIndex && startIndex >= playerPath.startIndex else {
             return nil
         }
         
-        let stepSize = stepSize + (position == .start ? -1 : 0)
+        let stepSize = stepSize + (startPosition == .start ? -1 : 0)
         let finalIndex = startIndex + stepSize
-        let path = playerPath.suffix(from: startIndex).prefix(stepSize + 1)
         
-        switch finalIndex {
-        case ..<playerPath.endIndex:
-            return PathSearchResult(path, .onPath(finalIndex))
-        case playerPath.endIndex:
-            return PathSearchResult(path, .exit)
-        default:
+        guard finalIndex <= playerPath.endIndex else {
             return nil
         }
+        
+        let path = playerPath.suffix(from: startIndex).prefix(stepSize + 1)
+        let finalPosition = finalIndex < playerPath.endIndex ? PathPosition.onPath(finalIndex) : .exit
+        let finalCell = finalIndex < playerPath.endIndex ? path.last! : nil
+        
+        return PathSearchResult(path, startPosition, finalPosition, playerPath[startIndex], finalCell)
+    }
+    
+    public func cell(for position: PathPosition, player: Int) -> Cell? {
+        guard case let .onPath(index) = position,
+            let playerPath = config.path[player],
+            index >= playerPath.startIndex && index < playerPath.endIndex  else {
+            return nil
+        }
+        return playerPath[index]
     }
     
     public func isHighground(cell: Cell) -> Bool {
@@ -67,15 +76,21 @@ struct Map {
 
 struct PathSearchResult: Equatable {
     let path: [Cell]
+    let startPosition: PathPosition
     let finalPosition: PathPosition
+    let startCell: Cell?
+    let finalCell: Cell?
     
-    init(_ path: [Cell], _ finalPosition: PathPosition) {
+    init(path: [Cell], startPosition: PathPosition, finalPosition: PathPosition, startCell: Cell?, finalCell: Cell?) {
         self.path = path
+        self.startPosition = startPosition
         self.finalPosition = finalPosition
+        self.startCell = startCell
+        self.finalCell = finalCell
     }
-    init(_ path: ArraySlice<Cell>, _ finalPosition: PathPosition) {
-        self.path = Array(path)
-        self.finalPosition = finalPosition
+    
+    fileprivate init(_ path: ArraySlice<Cell>, _ startPosition: PathPosition, _ finalPosition: PathPosition, _ startCell: Cell?, _ finalCell: Cell?) {
+        self.init(path: Array(path), startPosition: startPosition, finalPosition: finalPosition, startCell: startCell, finalCell: finalCell)
     }
 }
 

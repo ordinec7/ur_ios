@@ -8,11 +8,21 @@
 
 import Foundation
 
+
 protocol GameSessionDelegate: class {
-    func player(_ player: Int, cantMakeHisMoveInSession: GameSession)
+    func player(_ player: Int, doesntHaveAnyMoveIn session: GameSession)
+    func player(_ player: Int, isReadyToThrowDicesIn session: GameSession)
+    func player(_ player: Int, isReadyToMakeAMoveIn session: GameSession)
+    func player(_ player: Int, makesAdditionalTurnIn session: GameSession)
 }
 
+
 class GameSession {
+    
+    private enum MoveState: Equatable {
+        case idling
+        case makingMove(dices: [Int])
+    }
     
     weak var delegate: GameSessionDelegate?
     
@@ -21,44 +31,112 @@ class GameSession {
     let map: Map
     let players: [Int]
     
-    var moveState: MoveState
+    private var moveState: MoveState
     var rocksPositions: [Int: [PathPosition]]
     var currentPlayerIndex: Int
-    var dicesTrow: [Int] = []
     
     var currentPlayer: Int { return players[currentPlayerIndex] }
-    var stepSize: Int { return dicesTrow.reduce(0, +) }
+    
+    
+    // MARK: - Move functions
     
     func throwDices() -> [Int] {
-        guard moveState == .idling else {
-            preconditionFailure("Cant throw new dices before making or skipping a move with previous throw")
+        guard case .idling = moveState else {
+            preconditionFailure("Can't throw new dices before making or skipping a move with previous throw")
         }
-        dicesTrow = dices.next()
-        if hasMoves {
-            moveState = .makingMove
+        let dicesThrow = dices.next()
+        if availableMoves.isEmpty == false {
+            moveState = .makingMove(dices: dicesThrow)
+            delegate?.player(currentPlayer, isReadyToMakeAMoveIn: self)
         } else {
-            delegate?.player(currentPlayer, cantMakeHisMoveInSession: self)
-            selectNextPlayer()
-            moveState = .idling
+            delegate?.player(currentPlayer, doesntHaveAnyMoveIn: self)
+            passTurn()
         }
-        return dicesTrow
+        return dicesThrow
     }
     
-    func selectNextPlayer() {
+    
+    func move(from position: PathPosition) {
+        guard let move = findMove(from: position) else {
+            preconditionFailure("Can't make a non-existant move")
+        }
+        let changeIndex = rocksPositions[currentPlayer]!.index(of: move.startPosition)!
+        rocksPositions[currentPlayer]![changeIndex] = move.finalPosition
+        
+        if let finalCell = move.finalCell, map.isHighground(cell: finalCell) {
+            makeAdditionalTurn()
+        } else {
+            passTurn()
+        }
+    }
+    
+    
+    func passTurn() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.count
+        moveState = .idling
+        delegate?.player(currentPlayer, isReadyToThrowDicesIn: self)
     }
     
-    var hasMoves: Bool {
-        let stepSize = self.stepSize
-        guard stepSize > 0 else {
-            return false
+    func makeAdditionalTurn() {
+        moveState = .idling
+        delegate?.player(currentPlayer, makesAdditionalTurnIn: self)
+        delegate?.player(currentPlayer, isReadyToThrowDicesIn: self)
+    }
+    
+    
+    // MARK: - Data properties
+    
+    var stepSize: Int? {
+        return diceThrow?.reduce(0, +)
+    }
+    
+    var diceThrow: [Int]? {
+        guard case let .makingMove(dices: diceThrow) = moveState else {
+            return nil
+        }
+        return diceThrow
+    }
+    
+    
+    var availableMoves: [PathSearchResult] {
+        return rocksPositions[currentPlayer]!.compactMap { self.findMove(from: $0) }
+    }
+    
+    
+    func findMove(from position: PathPosition) -> PathSearchResult? {
+        guard let stepSize = stepSize, stepSize > 0 else {
+            return nil
+        }
+        guard rocksPositions[currentPlayer]!.contains(position) else {
+            return nil
+        }
+        guard let path = map.findPath(from: position, withStep: stepSize, player: currentPlayer) else {
+            return nil
+        }
+        if let finalCell = path.finalCell, occupiedCells(for: currentPlayer).contains(finalCell) {
+            return nil
+        }
+        if let finalCell = path.finalCell, map.isHighground(cell: finalCell) {
+            let otherPlayers = players.filter { $0 != currentPlayer }
+            let otherPlayerRocks = occupiedCells(for: otherPlayers)
+            if otherPlayerRocks.contains(finalCell) {
+                return nil
+            }
         }
         
-        let pathes = rocksPositions[currentPlayer]!.compactMap{
-            map.findPath(from: $0, withStep: stepSize, player: currentPlayer)
-        }
-        return pathes.count > 0
+        return path
     }
+    
+    
+    func occupiedCells(for player: Int) -> [Cell] {
+        return rocksPositions[player]!.compactMap { map.cell(for: $0, player: player) }
+    }
+    
+    
+    func occupiedCells(for players: [Int]) -> [Cell] {
+        return players.flatMap { occupiedCells(for: $0) }
+    }
+    
     
     init(rules: GameRules) {
         gameRules = rules
@@ -74,9 +152,4 @@ class GameSession {
         moveState = .idling
         currentPlayerIndex = 0
     }
-}
-
-enum MoveState: Equatable {
-    case makingMove
-    case idling
 }
