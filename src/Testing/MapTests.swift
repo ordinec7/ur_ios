@@ -74,37 +74,37 @@ class MapTests: XCTestCase {
         
         // Small map
         
-        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 1, player: 0), PSR(["0.0"], 0))
-        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 2, player: 0), PSR(["0.0", "0.1"], 1))
-        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 4, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], 3))
-        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 5, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], .exit))
+        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 1, player: 0), PSR(["0.0"], .start, 0))
+        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 2, player: 0), PSR(["0.0", "0.1"], .start, 1))
+        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 4, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], .start, 3))
+        XCTAssertEqual(smallMap.findPath(from: .start, withStep: 5, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], .start, .exit))
         XCTAssertEqual(smallMap.findPath(from: .start, withStep: 6, player: 0), PSR?.none)
         
-        XCTAssertEqual(smallMap.findPath(from: 0, withStep: 3, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], 3))
-        XCTAssertEqual(smallMap.findPath(from: 0, withStep: 4, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], .exit))
-        XCTAssertEqual(smallMap.findPath(from: 3, withStep: 1, player: 0), PSR(["1.0"], .exit))
+        XCTAssertEqual(smallMap.findPath(from: 0, withStep: 3, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], 0, 3))
+        XCTAssertEqual(smallMap.findPath(from: 0, withStep: 4, player: 0), PSR(["0.0", "0.1", "1.1", "1.0"], 0, .exit))
+        XCTAssertEqual(smallMap.findPath(from: 3, withStep: 1, player: 0), PSR(["1.0"], 3, .exit))
         XCTAssertEqual(smallMap.findPath(from: 3, withStep: 2, player: 0), PSR?.none)
-        XCTAssertEqual(smallMap.findPath(from: 2, withStep: 2, player: 0), PSR(["1.1", "1.0"], .exit))
-        XCTAssertEqual(smallMap.findPath(from: 2, withStep: 1, player: 0), PSR(["1.1", "1.0"], 3))
+        XCTAssertEqual(smallMap.findPath(from: 2, withStep: 2, player: 0), PSR(["1.1", "1.0"], 2, .exit))
+        XCTAssertEqual(smallMap.findPath(from: 2, withStep: 1, player: 0), PSR(["1.1", "1.0"], 2, 3))
         
         // Two players map
         
-        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 1, player: 0), PSR(["0.0"], 0))
-        XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 1, player: 0), PSR(["0.0", "0.1"], 1))
-        XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 6, player: 0), PSR(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"], 6))
-        XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 7, player: 0), PSR(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"], .exit))
+        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 1, player: 0), PSR(["0.0"], .start, 0))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 1, player: 0), PSR(["0.0", "0.1"], 0, 1))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 6, player: 0), PSR(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"], 0, 6))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 7, player: 0), PSR(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"], 0, .exit))
         XCTAssertEqual(twoPlayersMap.findPath(from: 0, withStep: 8, player: 0), PSR?.none)
-        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 8, player: 0), PSR(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"], .exit))
+        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 8, player: 0), PSR(["0.0", "0.1", "0.2", "0.3", "1.3", "2.3", "3.3"], .start, .exit))
         
-        XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 2, player: 0), PSR(["1.3", "2.3", "3.3"], 6))
-        XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 3, player: 0), PSR(["1.3", "2.3", "3.3"], .exit))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 2, player: 0), PSR(["1.3", "2.3", "3.3"], 4, 6))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 3, player: 0), PSR(["1.3", "2.3", "3.3"], 4, .exit))
         XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 4, player: 0), PSR?.none)
         
-        XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 1, player: 1), PSR(["2.0", "1.0"], 5))
-        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 1, player: 1), PSR(["3.3"], 0))
-        XCTAssertEqual(twoPlayersMap.findPath(from: 6, withStep: 1, player: 1), PSR(["0.0"], .exit))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 4, withStep: 1, player: 1), PSR(["2.0", "1.0"], 4, 5))
+        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 1, player: 1), PSR(["3.3"], .start, 0))
+        XCTAssertEqual(twoPlayersMap.findPath(from: 6, withStep: 1, player: 1), PSR(["0.0"], 6, .exit))
         XCTAssertEqual(twoPlayersMap.findPath(from: 6, withStep: 2, player: 1), PSR?.none)
-        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 8, player: 1), PSR(["3.3", "3.2", "3.1", "3.0", "2.0", "1.0", "0.0"], .exit))
+        XCTAssertEqual(twoPlayersMap.findPath(from: .start, withStep: 8, player: 1), PSR(["3.3", "3.2", "3.1", "3.0", "2.0", "1.0", "0.0"], .start, .exit))
     
     }
 }

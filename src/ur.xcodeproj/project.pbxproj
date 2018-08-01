@@ -12,7 +12,6 @@
 		3A0B4B212102084E00ED1C13 /* MapConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B4B202102084E00ED1C13 /* MapConfigTests.swift */; };
 		3A0B4B25210208B000ED1C13 /* MapConfigTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B4B24210208B000ED1C13 /* MapConfigTestModel.swift */; };
 		3A0B4B2721020CF800ED1C13 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B4B2621020CF800ED1C13 /* MapTests.swift */; };
-		3A150C202100FBD40044490A /* TestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A150C1F2100FBD40044490A /* TestTests.swift */; };
 		3A51A9D120EBCC8500C230B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A51A9D020EBCC8500C230B9 /* AppDelegate.swift */; };
 		3A51A9D320EBCC8500C230B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A51A9D220EBCC8500C230B9 /* ViewController.swift */; };
 		3A51A9D620EBCC8500C230B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A51A9D420EBCC8500C230B9 /* Main.storyboard */; };
@@ -22,6 +21,7 @@
 		3A6B9FB2210B5EAF001F11DB /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FB1210B5EAF001F11DB /* TestHelpers.swift */; };
 		3A6B9FB4210BA61C001F11DB /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FB3210BA61C001F11DB /* Dice.swift */; };
 		3A6B9FB6210BAB0A001F11DB /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FB5210BAB0A001F11DB /* GameSession.swift */; };
+		3AD9AF792111EE4700FDB708 /* PathSearchResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD9AF782111EE4700FDB708 /* PathSearchResultTests.swift */; };
 		5B8AEA46D6DDEEC675BE8117 /* Pods_ur.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C44F3AD60DD57B8ACD7EAA /* Pods_ur.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +43,6 @@
 		3A0B4B24210208B000ED1C13 /* MapConfigTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfigTestModel.swift; sourceTree = "<group>"; };
 		3A0B4B2621020CF800ED1C13 /* MapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTests.swift; sourceTree = "<group>"; };
 		3A150C1D2100FBD40044490A /* ur-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ur-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A150C1F2100FBD40044490A /* TestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTests.swift; sourceTree = "<group>"; };
 		3A150C212100FBD40044490A /* ur_Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ur_Tests-Info.plist"; sourceTree = "<group>"; };
 		3A51A9CD20EBCC8500C230B9 /* ur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A51A9D020EBCC8500C230B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		3A6B9FB1210B5EAF001F11DB /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		3A6B9FB3210BA61C001F11DB /* Dice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
 		3A6B9FB5210BAB0A001F11DB /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
+		3AD9AF782111EE4700FDB708 /* PathSearchResultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathSearchResultTests.swift; sourceTree = "<group>"; };
 		760904AD91859879EB248D0E /* Pods-ur.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ur.release.xcconfig"; path = "Pods/Target Support Files/Pods-ur/Pods-ur.release.xcconfig"; sourceTree = "<group>"; };
 		F9C44F3AD60DD57B8ACD7EAA /* Pods_ur.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ur.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -103,9 +103,9 @@
 		3A150C1E2100FBD40044490A /* Testing */ = {
 			isa = PBXGroup;
 			children = (
-				3A150C1F2100FBD40044490A /* TestTests.swift */,
 				3A0B4B202102084E00ED1C13 /* MapConfigTests.swift */,
 				3A0B4B2621020CF800ED1C13 /* MapTests.swift */,
+				3AD9AF782111EE4700FDB708 /* PathSearchResultTests.swift */,
 				3A0B4B222102089300ED1C13 /* Model */,
 			);
 			path = Testing;
@@ -304,7 +304,7 @@
 			files = (
 				3A0B4B212102084E00ED1C13 /* MapConfigTests.swift in Sources */,
 				3A6B9FB2210B5EAF001F11DB /* TestHelpers.swift in Sources */,
-				3A150C202100FBD40044490A /* TestTests.swift in Sources */,
+				3AD9AF792111EE4700FDB708 /* PathSearchResultTests.swift in Sources */,
 				3A0B4B2721020CF800ED1C13 /* MapTests.swift in Sources */,
 				3A0B4B25210208B000ED1C13 /* MapConfigTestModel.swift in Sources */,
 			);

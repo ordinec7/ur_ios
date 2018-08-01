@@ -9,7 +9,7 @@
 import Foundation
 
 struct Map {
-    private let config: MapConfig
+    internal let config: MapConfig
     
     let height: Int
     let width: Int
@@ -38,9 +38,8 @@ struct Map {
         
         let path = playerPath.suffix(from: startIndex).prefix(stepSize + 1)
         let finalPosition = finalIndex < playerPath.endIndex ? PathPosition.onPath(finalIndex) : .exit
-        let finalCell = finalIndex < playerPath.endIndex ? path.last! : nil
         
-        return PathSearchResult(path, startPosition, finalPosition, playerPath[startIndex], finalCell)
+        return PathSearchResult(path, startPosition, finalPosition)
     }
     
     public func cell(for position: PathPosition, player: Int) -> Cell? {
@@ -81,16 +80,16 @@ struct PathSearchResult: Equatable {
     let startCell: Cell?
     let finalCell: Cell?
     
-    init(path: [Cell], startPosition: PathPosition, finalPosition: PathPosition, startCell: Cell?, finalCell: Cell?) {
+    init(_ path: [Cell], _ startPosition: PathPosition, _ finalPosition: PathPosition) {
         self.path = path
         self.startPosition = startPosition
         self.finalPosition = finalPosition
-        self.startCell = startCell
-        self.finalCell = finalCell
+        self.startCell = startPosition.isOnPath ? path.first! : nil
+        self.finalCell = finalPosition.isOnPath ? path.last! : nil
     }
     
-    fileprivate init(_ path: ArraySlice<Cell>, _ startPosition: PathPosition, _ finalPosition: PathPosition, _ startCell: Cell?, _ finalCell: Cell?) {
-        self.init(path: Array(path), startPosition: startPosition, finalPosition: finalPosition, startCell: startCell, finalCell: finalCell)
+    fileprivate init(_ path: ArraySlice<Cell>, _ startPosition: PathPosition, _ finalPosition: PathPosition) {
+        self.init(Array(path), startPosition, finalPosition)
     }
 }
 
@@ -111,6 +110,15 @@ extension PathPosition {
             return index
         case .exit:
             return nil
+        }
+    }
+    
+    var isOnPath: Bool {
+        switch self {
+        case .onPath:
+            return true
+        default:
+            return false
         }
     }
 }
