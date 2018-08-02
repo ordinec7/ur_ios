@@ -17,8 +17,9 @@ struct DiceSet {
         return dices.map { $0.next() }
     }
     
-    init(randomSource: GKRandom = GKRandomSource.sharedRandom(), count: Int = 4) {
-        self.dices = Array(repeating: Dice.urDice(randomSource), count: count)
+    static func urSet(randomSource: GKRandom = GKRandomSource.sharedRandom(), count: Int = 4) -> DiceSet {
+        let dices = Array(repeating: Dice.urDice(randomSource), count: count)
+        return self.init(dices: dices)
     }
 }
 

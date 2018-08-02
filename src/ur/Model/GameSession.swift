@@ -10,32 +10,61 @@ import Foundation
 
 
 protocol GameSessionDelegate: class {
-    func player(_ player: Int, doesntHaveAnyMoveIn session: GameSession)
-    func player(_ player: Int, isReadyToThrowDicesIn session: GameSession)
-    func player(_ player: Int, isReadyToMakeAMoveIn session: GameSession)
-    func player(_ player: Int, makesAdditionalTurnIn session: GameSession)
+    func player(_ player: PlayerIdentifier, doesntHaveAnyMoveIn session: GameSession)
+    func player(_ player: PlayerIdentifier, isReadyToThrowDicesIn session: GameSession)
+    func player(_ player: PlayerIdentifier, isReadyToMakeAMoveIn session: GameSession)
+    func player(_ player: PlayerIdentifier, makesAdditionalTurnIn session: GameSession)
 }
 
 
 class GameSession {
     
-    private enum MoveState: Equatable {
+    enum MoveState: Equatable {
         case idling
         case makingMove(dices: [Int])
     }
     
+    struct GameState {
+        var moveState: MoveState
+        var rocksPositions: [PlayerIdentifier: [PathPosition]]
+        var currentPlayerIndex: Int
+    }
+    
+    
     weak var delegate: GameSessionDelegate?
+    
     
     let gameRules: GameRules
     let dices: DiceSet
     let map: Map
-    let players: [Int]
+    let players: [PlayerIdentifier]
     
-    private var moveState: MoveState
-    var rocksPositions: [Int: [PathPosition]]
-    var currentPlayerIndex: Int
     
-    var currentPlayer: Int { return players[currentPlayerIndex] }
+    var gameState: GameState
+    
+    var moveState: MoveState {
+        get { return gameState.moveState }
+        set { gameState.moveState = newValue }
+    }
+    var rocksPositions: [PlayerIdentifier: [PathPosition]] {
+        get { return gameState.rocksPositions }
+        set { gameState.rocksPositions = newValue }
+    }
+    var currentPlayerIndex: Int {
+        get { return gameState.currentPlayerIndex }
+        set { gameState.currentPlayerIndex = newValue }
+    }
+    
+    
+    var currentPlayer: PlayerIdentifier {
+        return players[currentPlayerIndex]
+    }
+    var nextPlayerIndex: Int {
+        return (currentPlayerIndex + 1) % players.count
+    }
+    var nextPlayer: PlayerIdentifier {
+        return players[nextPlayerIndex]
+    }
     
     
     // MARK: - Move functions
@@ -128,28 +157,31 @@ class GameSession {
     }
     
     
-    func occupiedCells(for player: Int) -> [Cell] {
+    func occupiedCells(for player: PlayerIdentifier) -> [Cell] {
         return rocksPositions[player]!.compactMap { map.cell(for: $0, player: player) }
     }
     
     
-    func occupiedCells(for players: [Int]) -> [Cell] {
+    func occupiedCells(for players: [PlayerIdentifier]) -> [Cell] {
         return players.flatMap { occupiedCells(for: $0) }
     }
     
     
-    init(rules: GameRules) {
-        gameRules = rules
-        map = Map(config: rules.mapConfig)
-        dices = rules.diceSet
-        players = map.players.sorted()
+    convenience init(rules: GameRules) {
+        self.init(rules: rules, state: .init(moveState: .idling, rocksPositions: [:], currentPlayerIndex: 0))
         
-        rocksPositions = [:]
         for player in players {
             rocksPositions[player] = Array(repeating: .start, count: rules.rocksCount)
         }
+    }
+    
+    
+    init(rules: GameRules, state: GameState) {
+        self.map = Map(config: rules.mapConfig)
+        self.dices = rules.diceSet
+        self.players = map.players.sorted { $0.id < $1.id }
         
-        moveState = .idling
-        currentPlayerIndex = 0
+        self.gameRules = rules
+        self.gameState = state
     }
 }

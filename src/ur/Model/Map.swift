@@ -15,13 +15,13 @@ struct Map {
     let width: Int
     let origin: Cell
     let validCells: Set<Cell>
-    var players: [Int] { return Array(config.path.keys) }
+    var players: [PlayerIdentifier] { return Array(config.path.keys) }
     
     /// Calculates path from given cell.
     /// - parameter cell: Initial cell, from which path should be calculated. If nil, calculates path from outside the field
     /// - parameter length: Step size. Should be greated than 0, or else invalid path is returned
     /// - parameter player: Player id for which path sould be calculated
-    public func findPath(from startPosition: PathPosition, withStep stepSize: Int, player: Int) -> PathSearchResult? {
+    public func findPath(from startPosition: PathPosition, withStep stepSize: Int, player: PlayerIdentifier) -> PathSearchResult? {
         guard stepSize > 0,
             let playerPath = config.path[player],
             let startIndex = startPosition.value,
@@ -42,7 +42,7 @@ struct Map {
         return PathSearchResult(path, startPosition, finalPosition)
     }
     
-    public func cell(for position: PathPosition, player: Int) -> Cell? {
+    public func cell(for position: PathPosition, player: PlayerIdentifier) -> Cell? {
         guard case let .onPath(index) = position,
             let playerPath = config.path[player],
             index >= playerPath.startIndex && index < playerPath.endIndex  else {

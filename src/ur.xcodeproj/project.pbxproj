@@ -12,6 +12,7 @@
 		3A0B4B212102084E00ED1C13 /* MapConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B4B202102084E00ED1C13 /* MapConfigTests.swift */; };
 		3A0B4B25210208B000ED1C13 /* MapConfigTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B4B24210208B000ED1C13 /* MapConfigTestModel.swift */; };
 		3A0B4B2721020CF800ED1C13 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B4B2621020CF800ED1C13 /* MapTests.swift */; };
+		3A4067BF2113951500117348 /* RandomSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4067BE2113951500117348 /* RandomSourceModel.swift */; };
 		3A51A9D120EBCC8500C230B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A51A9D020EBCC8500C230B9 /* AppDelegate.swift */; };
 		3A51A9D320EBCC8500C230B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A51A9D220EBCC8500C230B9 /* ViewController.swift */; };
 		3A51A9D620EBCC8500C230B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A51A9D420EBCC8500C230B9 /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		3A0B4B2621020CF800ED1C13 /* MapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTests.swift; sourceTree = "<group>"; };
 		3A150C1D2100FBD40044490A /* ur-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ur-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A150C212100FBD40044490A /* ur_Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ur_Tests-Info.plist"; sourceTree = "<group>"; };
+		3A4067BE2113951500117348 /* RandomSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSourceModel.swift; sourceTree = "<group>"; };
 		3A51A9CD20EBCC8500C230B9 /* ur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A51A9D020EBCC8500C230B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A51A9D220EBCC8500C230B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			children = (
 				3A6B9FB1210B5EAF001F11DB /* TestHelpers.swift */,
 				3A0B4B24210208B000ED1C13 /* MapConfigTestModel.swift */,
+				3A4067BE2113951500117348 /* RandomSourceModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A0B4B212102084E00ED1C13 /* MapConfigTests.swift in Sources */,
+				3A4067BF2113951500117348 /* RandomSourceModel.swift in Sources */,
 				3A6B9FB2210B5EAF001F11DB /* TestHelpers.swift in Sources */,
 				3AD9AF792111EE4700FDB708 /* PathSearchResultTests.swift in Sources */,
 				3A0B4B2721020CF800ED1C13 /* MapTests.swift in Sources */,

@@ -8,12 +8,18 @@
 
 import Foundation
 
+
+// MARK: Map Config
+
 struct MapConfig {
     let height: Int
     let width: Int
     let highgroundsCells: Set<Cell>
-    let path: [Int: [Cell]]
+    let path: [PlayerIdentifier: [Cell]]
 }
+
+
+// MARK: Cell
 
 struct Cell: Hashable, Equatable, Codable {
     let x: Int
@@ -23,5 +29,26 @@ struct Cell: Hashable, Equatable, Codable {
 extension Cell: CustomDebugStringConvertible {
     var debugDescription: String {
         return "\(x):\(y)"
+    }
+}
+
+
+// MARK: Player Identifier
+
+struct PlayerIdentifier: Hashable, Equatable, Codable {
+    var id: Int
+}
+
+extension PlayerIdentifier: ExpressibleByIntegerLiteral {
+    typealias IntegerLiteralType = Int
+    
+    init(integerLiteral value: IntegerLiteralType) {
+        self.init(id: value)
+    }
+}
+
+extension PlayerIdentifier: CustomDebugStringConvertible {
+    var debugDescription: String {
+        return "Player_\(id)"
     }
 }

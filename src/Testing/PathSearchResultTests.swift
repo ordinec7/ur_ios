@@ -13,12 +13,12 @@ class PathSearchResultTests: XCTestCase {
     
     func testOnPathProperties() {
         let hugeMap = Map(config: MapConfigModels.hugePath)
-        
-        for _ in 0..<10000 {
-            let startPosition = PathPosition.onPath(Int(arc4random_uniform(20000)))
-            let stepSize = Int(arc4random_uniform(10000))
+        for i in 0..<1000 {
+            let startPosition = PathPosition.onPath(pseudoRandom(i, mod: 10000))
+            let stepSize = pseudoRandom(i, mod: 10000) + 1
             
             guard let psr = hugeMap.findPath(from: startPosition, withStep: stepSize, player: 0) else {
+                XCTAssertGreaterThan(startPosition.value! + stepSize, 10000)
                 continue
             }
             XCTAssertEqual(psr.startPosition, startPosition)
@@ -73,4 +73,8 @@ class PathSearchResultTests: XCTestCase {
         XCTAssertEqual(psr5.finalCell, nil)
     }
     
+    
+    private func pseudoRandom(_ i: Int, mod: Int = Int.max) -> Int {
+        return (i * 986444689) % mod
+    }
 }
