@@ -19,6 +19,7 @@ protocol GameSessionDelegate: class {
 
 class GameSession {
     
+    /// Show if player did roll the dices and ret
     enum MoveState: Equatable {
         case idling
         case makingMove(dices: [Int])
@@ -46,6 +47,8 @@ class GameSession {
         get { return gameState.moveState }
         set { gameState.moveState = newValue }
     }
+    
+    /// All rocks positions per player
     var rocksPositions: [PlayerIdentifier: [PathPosition]] {
         get { return gameState.rocksPositions }
         set { gameState.rocksPositions = newValue }
@@ -69,6 +72,7 @@ class GameSession {
     
     // MARK: - Move functions
     
+    /// Throw new dices
     func throwDices() -> [Int] {
         guard case .idling = moveState else {
             preconditionFailure("Can't throw new dices before making or skipping a move with previous throw")
@@ -85,6 +89,7 @@ class GameSession {
     }
     
     
+    /// Move rock from given position for
     func move(from position: PathPosition) {
         guard let move = findMove(from: position) else {
             preconditionFailure("Can't make a non-existant move")
@@ -100,6 +105,7 @@ class GameSession {
     }
     
     
+    /// End current player's turn
     func passTurn() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.count
         moveState = .idling
@@ -115,10 +121,12 @@ class GameSession {
     
     // MARK: - Data properties
     
+    /// Sum of thrown dices
     var stepSize: Int? {
         return diceThrow?.reduce(0, +)
     }
     
+    /// Return dices values if they were thrown
     var diceThrow: [Int]? {
         guard case let .makingMove(dices: diceThrow) = moveState else {
             return nil
@@ -127,11 +135,13 @@ class GameSession {
     }
     
     
+    /// Return array of available moves
     var availableMoves: [PathSearchResult] {
         return rocksPositions[currentPlayer]!.compactMap { self.findMove(from: $0) }
     }
     
     
+    /// Return path from given position
     func findMove(from position: PathPosition) -> PathSearchResult? {
         guard let stepSize = stepSize, stepSize > 0 else {
             return nil
@@ -157,6 +167,7 @@ class GameSession {
     }
     
     
+    /// Return array of occupied cells of player
     func occupiedCells(for player: PlayerIdentifier) -> [Cell] {
         return rocksPositions[player]!.compactMap { map.cell(for: $0, player: player) }
     }

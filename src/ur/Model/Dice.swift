@@ -9,10 +9,12 @@
 import GameplayKit
 
 
+/// Set of dices
 struct DiceSet {
     
     private let dices: [Dice]
     
+    /// Roll next dice values
     func next() -> [Int] {
         return dices.map { $0.next() }
     }

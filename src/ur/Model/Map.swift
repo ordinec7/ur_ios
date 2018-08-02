@@ -15,9 +15,9 @@ struct Map {
     let width: Int
     let origin: Cell
     let validCells: Set<Cell>
-    var players: [PlayerIdentifier] { return Array(config.path.keys) }
+    var players: [PlayerIdentifier]
     
-    /// Calculates path from given cell.
+    /// Calculate path from given cell.
     /// - parameter cell: Initial cell, from which path should be calculated. If nil, calculates path from outside the field
     /// - parameter length: Step size. Should be greated than 0, or else invalid path is returned
     /// - parameter player: Player id for which path sould be calculated
@@ -42,6 +42,8 @@ struct Map {
         return PathSearchResult(path, startPosition, finalPosition)
     }
     
+
+    /// Return map cell from players paths index
     public func cell(for position: PathPosition, player: PlayerIdentifier) -> Cell? {
         guard case let .onPath(index) = position,
             let playerPath = config.path[player],
@@ -51,6 +53,7 @@ struct Map {
         return playerPath[index]
     }
     
+    /// Tell if given cell is highgrounded
     public func isHighground(cell: Cell) -> Bool {
         return config.highgroundsCells.contains(cell)
     }
@@ -58,6 +61,7 @@ struct Map {
     init(config: MapConfig) {
         self.config = config
         self.validCells = Set(config.path.values.flatMap({ $0 }))
+        self.players = Array(config.path.keys)
         
         var minmax = (minX: 0, minY: 0, maxX: 0, maxY: 0)
         validCells.forEach {
@@ -73,6 +77,7 @@ struct Map {
 }
 
 
+/// Complete path data
 struct PathSearchResult: Equatable {
     let path: [Cell]
     let startPosition: PathPosition
@@ -94,6 +99,7 @@ struct PathSearchResult: Equatable {
 }
 
 
+/// Position of the path
 enum PathPosition: Equatable {
     case start
     case exit
@@ -102,6 +108,8 @@ enum PathPosition: Equatable {
 
 
 extension PathPosition {
+    
+    /// Position's index, strart = 0 too
     var value: Int? {
         switch self {
         case .start:
