@@ -22,6 +22,7 @@
 		3A6B9FB4210BA61C001F11DB /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FB3210BA61C001F11DB /* Dice.swift */; };
 		3A6B9FB6210BAB0A001F11DB /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FB5210BAB0A001F11DB /* GameSession.swift */; };
 		3AD9AF792111EE4700FDB708 /* PathSearchResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD9AF782111EE4700FDB708 /* PathSearchResultTests.swift */; };
+		3AD9AF7B211245F800FDB708 /* DiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD9AF7A211245F800FDB708 /* DiceTests.swift */; };
 		5B8AEA46D6DDEEC675BE8117 /* Pods_ur.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C44F3AD60DD57B8ACD7EAA /* Pods_ur.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		3A6B9FB3210BA61C001F11DB /* Dice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
 		3A6B9FB5210BAB0A001F11DB /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
 		3AD9AF782111EE4700FDB708 /* PathSearchResultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathSearchResultTests.swift; sourceTree = "<group>"; };
+		3AD9AF7A211245F800FDB708 /* DiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceTests.swift; sourceTree = "<group>"; };
 		760904AD91859879EB248D0E /* Pods-ur.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ur.release.xcconfig"; path = "Pods/Target Support Files/Pods-ur/Pods-ur.release.xcconfig"; sourceTree = "<group>"; };
 		F9C44F3AD60DD57B8ACD7EAA /* Pods_ur.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ur.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -106,6 +108,7 @@
 				3A0B4B202102084E00ED1C13 /* MapConfigTests.swift */,
 				3A0B4B2621020CF800ED1C13 /* MapTests.swift */,
 				3AD9AF782111EE4700FDB708 /* PathSearchResultTests.swift */,
+				3AD9AF7A211245F800FDB708 /* DiceTests.swift */,
 				3A0B4B222102089300ED1C13 /* Model */,
 			);
 			path = Testing;
@@ -306,6 +309,7 @@
 				3A6B9FB2210B5EAF001F11DB /* TestHelpers.swift in Sources */,
 				3AD9AF792111EE4700FDB708 /* PathSearchResultTests.swift in Sources */,
 				3A0B4B2721020CF800ED1C13 /* MapTests.swift in Sources */,
+				3AD9AF7B211245F800FDB708 /* DiceTests.swift in Sources */,
 				3A0B4B25210208B000ED1C13 /* MapConfigTestModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
