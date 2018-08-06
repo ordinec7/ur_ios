@@ -10,41 +10,40 @@ import Foundation
 
 struct Map {
     internal let config: MapConfig
-    
+
     let height: Int
     let width: Int
     let origin: Cell
     let validCells: Set<Cell>
     var players: [PlayerIdentifier]
-    
+
     /// Calculate path from given cell.
     /// - parameter cell: Initial cell, from which path should be calculated. If nil, calculates path from outside the field
     /// - parameter length: Step size. Should be greated than 0, or else invalid path is returned
     /// - parameter player: Player id for which path sould be calculated
-    public func findPath(from startPosition: PathPosition, withStep stepSize: Int, player: PlayerIdentifier) -> PathSearchResult? {
+    func findPath(from startPosition: PathPosition, withStep stepSize: Int, player: PlayerIdentifier) -> PathSearchResult? {
         guard stepSize > 0,
             let playerPath = config.path[player],
             let startIndex = startPosition.value,
             startIndex < playerPath.endIndex && startIndex >= playerPath.startIndex else {
             return nil
         }
-        
+
         let stepSize = stepSize + (startPosition == .start ? -1 : 0)
         let finalIndex = startIndex + stepSize
-        
+
         guard finalIndex <= playerPath.endIndex else {
             return nil
         }
-        
+
         let path = playerPath.suffix(from: startIndex).prefix(stepSize + 1)
         let finalPosition = finalIndex < playerPath.endIndex ? PathPosition.onPath(finalIndex) : .exit
-        
+
         return PathSearchResult(path, startPosition, finalPosition)
     }
-    
 
     /// Return map cell from players paths index
-    public func cell(for position: PathPosition, player: PlayerIdentifier) -> Cell? {
+    func cell(for position: PathPosition, player: PlayerIdentifier) -> Cell? {
         guard case let .onPath(index) = position,
             let playerPath = config.path[player],
             index >= playerPath.startIndex && index < playerPath.endIndex  else {
@@ -52,17 +51,17 @@ struct Map {
         }
         return playerPath[index]
     }
-    
+
     /// Tell if given cell is highgrounded
-    public func isHighground(cell: Cell) -> Bool {
+    func isHighground(cell: Cell) -> Bool {
         return config.highgroundsCells.contains(cell)
     }
-    
+
     init(config: MapConfig) {
         self.config = config
         self.validCells = Set(config.path.values.flatMap({ $0 }))
         self.players = Array(config.path.keys)
-        
+
         var minmax = (minX: 0, minY: 0, maxX: 0, maxY: 0)
         validCells.forEach {
             minmax = (min(minmax.minX, $0.x),
@@ -76,7 +75,6 @@ struct Map {
     }
 }
 
-
 /// Complete path data
 struct PathSearchResult: Equatable {
     let path: [Cell]
@@ -84,7 +82,7 @@ struct PathSearchResult: Equatable {
     let finalPosition: PathPosition
     let startCell: Cell?
     let finalCell: Cell?
-    
+
     init(_ path: [Cell], _ startPosition: PathPosition, _ finalPosition: PathPosition) {
         self.path = path
         self.startPosition = startPosition
@@ -92,12 +90,11 @@ struct PathSearchResult: Equatable {
         self.startCell = startPosition.isOnPath ? path.first! : nil
         self.finalCell = finalPosition.isOnPath ? path.last! : nil
     }
-    
-    fileprivate init(_ path: ArraySlice<Cell>, _ startPosition: PathPosition, _ finalPosition: PathPosition) {
+
+    init(_ path: ArraySlice<Cell>, _ startPosition: PathPosition, _ finalPosition: PathPosition) {
         self.init(Array(path), startPosition, finalPosition)
     }
 }
-
 
 /// Position of the path
 enum PathPosition: Equatable {
@@ -106,9 +103,8 @@ enum PathPosition: Equatable {
     case onPath(Int)
 }
 
-
 extension PathPosition {
-    
+
     /// Position's index, strart = 0 too
     var value: Int? {
         switch self {
@@ -120,7 +116,7 @@ extension PathPosition {
             return nil
         }
     }
-    
+
     var isOnPath: Bool {
         switch self {
         case .onPath:
@@ -131,14 +127,12 @@ extension PathPosition {
     }
 }
 
-
 extension PathPosition: ExpressibleByIntegerLiteral {
     typealias IntegerLiteralType = Int
     public init(integerLiteral value: IntegerLiteralType) {
         self = .onPath(value)
     }
 }
-
 
 extension PathPosition: CustomDebugStringConvertible {
     public var debugDescription: String {

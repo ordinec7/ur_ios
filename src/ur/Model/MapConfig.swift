@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 // MARK: Map Config
 
 struct MapConfig {
@@ -17,7 +16,6 @@ struct MapConfig {
     let highgroundsCells: Set<Cell>
     let path: [PlayerIdentifier: [Cell]]
 }
-
 
 // MARK: Cell
 
@@ -32,7 +30,6 @@ extension Cell: CustomDebugStringConvertible {
     }
 }
 
-
 // MARK: Player Identifier
 
 struct PlayerIdentifier: Hashable, Equatable, Codable {
@@ -41,7 +38,7 @@ struct PlayerIdentifier: Hashable, Equatable, Codable {
 
 extension PlayerIdentifier: ExpressibleByIntegerLiteral {
     typealias IntegerLiteralType = Int
-    
+
     init(integerLiteral value: IntegerLiteralType) {
         self.init(id: value)
     }

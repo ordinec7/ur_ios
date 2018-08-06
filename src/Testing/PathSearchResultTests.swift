@@ -6,17 +6,17 @@
 //  Copyright © 2018 LCTeam. All rights reserved.
 //
 
-import XCTest
 @testable import ur
+import XCTest
 
 class PathSearchResultTests: XCTestCase {
-    
+
     func testOnPathProperties() {
         let hugeMap = Map(config: MapConfigModels.hugePath)
         for i in 0..<1000 {
             let startPosition = PathPosition.onPath(pseudoRandom(i, mod: 10000))
             let stepSize = pseudoRandom(i, mod: 10000) + 1
-            
+
             guard let psr = hugeMap.findPath(from: startPosition, withStep: stepSize, player: 0) else {
                 XCTAssertGreaterThan(startPosition.value! + stepSize, 10000)
                 continue
@@ -29,42 +29,42 @@ class PathSearchResultTests: XCTestCase {
             }
         }
     }
-    
+
     func testInitialization() {
         let path: [Cell] = ["0.0", "10.0", "0.10", "10.10"]
         let startCell: Cell = "0.0"
         let finalCell: Cell = "10.10"
         let startPos = PathPosition.onPath(10)
         let finalPos = PathPosition.onPath(300)
-        
+
         let psr1 = PathSearchResult(path, startPos, finalPos)
         XCTAssertEqual(psr1.path, path)
         XCTAssertEqual(psr1.startPosition, startPos)
         XCTAssertEqual(psr1.finalPosition, finalPos)
         XCTAssertEqual(psr1.startCell, startCell)
         XCTAssertEqual(psr1.finalCell, finalCell)
-        
+
         let psr2 = PathSearchResult(path, .start, finalPos)
         XCTAssertEqual(psr2.path, path)
         XCTAssertEqual(psr2.startPosition, .start)
         XCTAssertEqual(psr2.finalPosition, finalPos)
         XCTAssertEqual(psr2.startCell, nil)
         XCTAssertEqual(psr2.finalCell, finalCell)
-        
+
         let psr3 = PathSearchResult(path, startPos, .exit)
         XCTAssertEqual(psr3.path, path)
         XCTAssertEqual(psr3.startPosition, startPos)
         XCTAssertEqual(psr3.finalPosition, .exit)
         XCTAssertEqual(psr3.startCell, startCell)
         XCTAssertEqual(psr3.finalCell, nil)
-        
+
         let psr4 = PathSearchResult(path, .start, .exit)
         XCTAssertEqual(psr4.path, path)
         XCTAssertEqual(psr4.startPosition, .start)
         XCTAssertEqual(psr4.finalPosition, .exit)
         XCTAssertEqual(psr4.startCell, nil)
         XCTAssertEqual(psr4.finalCell, nil)
-        
+
         let psr5 = PathSearchResult(path, .exit, .start)
         XCTAssertEqual(psr5.path, path)
         XCTAssertEqual(psr5.startPosition, .exit)
@@ -72,8 +72,7 @@ class PathSearchResultTests: XCTestCase {
         XCTAssertEqual(psr5.startCell, nil)
         XCTAssertEqual(psr5.finalCell, nil)
     }
-    
-    
+
     private func pseudoRandom(_ i: Int, mod: Int = Int.max) -> Int {
         return (i * 986444689) % mod
     }
