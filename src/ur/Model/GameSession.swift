@@ -72,8 +72,8 @@ class GameSession {
             preconditionFailure("Can't throw new dices before making or skipping a move with previous throw")
         }
         let dicesThrow = dices.next()
+        moveState = .makingMove(dices: dicesThrow)
         if availableMoves.isEmpty == false {
-            moveState = .makingMove(dices: dicesThrow)
             delegate?.player(currentPlayer, isReadyToMakeAMoveIn: self)
         } else {
             delegate?.player(currentPlayer, doesntHaveAnyMoveIn: self)
@@ -127,7 +127,7 @@ class GameSession {
 
     /// Return array of available moves
     var availableMoves: [PathSearchResult] {
-        return rocksPositions[currentPlayer]!.compactMap { self.findMove(from: $0) }
+        return Set(rocksPositions[currentPlayer]!).compactMap { self.findMove(from: $0) }
     }
 
     /// Return path from given position

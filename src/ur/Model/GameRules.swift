@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GameRules {
+public struct GameRules: Equatable {
     let identifier: String
     let rocksCount: Int
     let diceSet: DiceSet

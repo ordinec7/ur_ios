@@ -97,7 +97,7 @@ struct PathSearchResult: Equatable {
 }
 
 /// Position of the path
-enum PathPosition: Equatable {
+enum PathPosition: Equatable, Hashable {
     case start
     case exit
     case onPath(Int)
@@ -129,13 +129,13 @@ extension PathPosition {
 
 extension PathPosition: ExpressibleByIntegerLiteral {
     typealias IntegerLiteralType = Int
-    public init(integerLiteral value: IntegerLiteralType) {
+    init(integerLiteral value: IntegerLiteralType) {
         self = .onPath(value)
     }
 }
 
 extension PathPosition: CustomDebugStringConvertible {
-    public var debugDescription: String {
+    var debugDescription: String {
         switch self {
         case .start:
             return "START"

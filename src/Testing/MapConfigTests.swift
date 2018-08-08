@@ -13,8 +13,6 @@ class MapConfigTests: XCTestCase {
 
     func testSmallMapData() {
         let mapConfig = MapConfigModels.small
-        XCTAssertEqual(mapConfig.height, 2)
-        XCTAssertEqual(mapConfig.width, 2)
         XCTAssertTrue(mapConfig.highgroundsCells.isEmpty)
         XCTAssertEqual(Set(mapConfig.path.keys), Set([0]))
         XCTAssertEqual(mapConfig.path[0]?.count, 4)

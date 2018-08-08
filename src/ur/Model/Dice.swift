@@ -9,7 +9,7 @@
 import GameplayKit
 
 /// Set of dices
-struct DiceSet {
+struct DiceSet: Equatable {
 
     private let dices: [Dice]
 
@@ -24,7 +24,7 @@ struct DiceSet {
     }
 }
 
-struct Dice {
+struct Dice: Equatable {
 
     private let random: GKRandomDistribution
 

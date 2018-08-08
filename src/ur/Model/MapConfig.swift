@@ -10,9 +10,7 @@ import Foundation
 
 // MARK: Map Config
 
-struct MapConfig {
-    let height: Int
-    let width: Int
+struct MapConfig: Equatable {
     let highgroundsCells: Set<Cell>
     let path: [PlayerIdentifier: [Cell]]
 }
@@ -27,6 +25,14 @@ struct Cell: Hashable, Equatable, Codable {
 extension Cell: CustomDebugStringConvertible {
     var debugDescription: String {
         return "\(x):\(y)"
+    }
+}
+
+extension Cell: ExpressibleByStringLiteral {
+    typealias StringLiteralType = String
+    init(stringLiteral value: StringLiteralType) {
+        let components = value.components(separatedBy: .init(charactersIn: ".,;:_")).map { Int($0)! }
+        self.init(x: components.first!, y: components.last!)
     }
 }
 

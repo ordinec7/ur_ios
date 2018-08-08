@@ -28,8 +28,6 @@ class MapTests: XCTestCase {
             let map = Map(config: config)
             XCTAssertEqual(map.config.highgroundsCells, config.highgroundsCells)
             XCTAssertEqual(map.config.path, config.path)
-            XCTAssertEqual(map.config.height, config.height)
-            XCTAssertEqual(map.config.width, config.width)
         }
     }
 
