@@ -2,6 +2,7 @@ reporter: "xcode" # xcode, json, csv, checkstyle, junit, html, emoji
 
 disabled_rules:
   - superfluous_disable_command
+  - vertical_whitespace
 opt_in_rules:
   - empty_count
   - array_init

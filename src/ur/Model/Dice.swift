@@ -11,11 +11,15 @@ import GameplayKit
 /// Set of dices
 struct DiceSet: Equatable {
 
-    private let dices: [Dice]
+    private var dices: [Dice]
 
     /// Roll next dice values
     func next() -> [Int] {
         return dices.map { $0.next() }
+    }
+    
+    mutating func setRandom(_ random: GKRandom) {
+        dices = dices.map { var t = $0; t.setRandom(random); return t }
     }
 
     static func urSet(randomSource: GKRandom = GKRandomSource.sharedRandom(), count: Int = 4) -> DiceSet {
@@ -26,13 +30,17 @@ struct DiceSet: Equatable {
 
 struct Dice: Equatable {
 
-    private let random: GKRandomDistribution
+    var random: GKRandomDistribution
 
     var lowestValue: Int { return random.lowestValue }
     var highestValue: Int { return random.highestValue }
 
     func next() -> Int {
         return random.nextInt()
+    }
+    
+    mutating func setRandom(_ random: GKRandom) {
+        self.random = GKRandomDistribution(randomSource: random, lowestValue: lowestValue, highestValue: highestValue)
     }
 
     init(lowest: Int, highest: Int, randomSource: GKRandom = GKRandomSource.sharedRandom()) {

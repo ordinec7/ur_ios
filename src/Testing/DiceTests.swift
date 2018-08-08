@@ -41,9 +41,9 @@ class DiceTests: XCTestCase {
     func testRandomSource() {
         let always115 = Dice(lowest: 100, highest: 200, randomSource: SingleValueRandom(15))
         let always0 = Dice(lowest: 0, highest: 200, randomSource: SingleValueRandom(0))
-        let zeroThroughTen = Dice(lowest: 0, highest: 10, randomSource: SequenceRandom(lower: 0, upper: 100))
-        let zeroThroughTen2 = Dice(lowest: -100, highest: 100, randomSource: SequenceRandom(lower: 100, upper: 110))
-        let blinkingUr = Dice.urDice(SequenceRandom())
+        let zeroThroughTen = Dice(lowest: 0, highest: 10, randomSource: LinearSequenceRandom(lower: 0, upper: 100))
+        let zeroThroughTen2 = Dice(lowest: -100, highest: 100, randomSource: LinearSequenceRandom(lower: 100, upper: 110))
+        let blinkingUr = Dice.urDice(LinearSequenceRandom())
 
         for i in 0..<100 {
             XCTAssertEqual(always115.next(), 115)
@@ -57,7 +57,7 @@ class DiceTests: XCTestCase {
     func testRandomSourceForSet() {
         let always0 = DiceSet.urSet(randomSource: SingleValueRandom(0), count: 3)
         let always1 = DiceSet.urSet(randomSource: SingleValueRandom(1), count: 5)
-        let blinking = DiceSet.urSet(randomSource: SequenceRandom(), count: 4)
+        let blinking = DiceSet.urSet(randomSource: LinearSequenceRandom(), count: 4)
 
         for _ in 0..<100 {
             XCTAssertEqual(always0.next(), [0, 0, 0])
