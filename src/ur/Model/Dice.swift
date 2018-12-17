@@ -17,7 +17,7 @@ struct DiceSet: Equatable {
     func next() -> [Int] {
         return dices.map { $0.next() }
     }
-    
+
     mutating func setRandom(_ random: GKRandom) {
         dices = dices.map { var t = $0; t.setRandom(random); return t }
     }
@@ -38,7 +38,7 @@ struct Dice: Equatable {
     func next() -> Int {
         return random.nextInt()
     }
-    
+
     mutating func setRandom(_ random: GKRandom) {
         self.random = GKRandomDistribution(randomSource: random, lowestValue: lowestValue, highestValue: highestValue)
     }
