@@ -97,10 +97,11 @@ struct PathSearchResult: Equatable {
 }
 
 /// Position of the path
+// identifier_name
 enum PathPosition: Equatable, Hashable {
     case start
     case exit
-    case onPath(Int)
+    case onPath(Int) // swiftlint:disable:this identifier_name
 }
 
 extension PathPosition {

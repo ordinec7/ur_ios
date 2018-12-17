@@ -20,7 +20,7 @@ class GameSession {
     /// Show if player did roll the dices and ret
     enum MoveState: Equatable {
         case idling
-        case makingMove(dices: [Int])
+        case makingMove(dices: [Int])  // swiftlint:disable:this identifier_name
     }
 
     struct GameState {
